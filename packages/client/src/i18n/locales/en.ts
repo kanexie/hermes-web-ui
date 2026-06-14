@@ -88,6 +88,7 @@ export default {
     terminal: 'Terminal',
     groupChat: 'Group Chat',
     files: 'Files',
+    knowledgeBase: 'Knowledge Base',
     groupConversation: 'Conversation',
     groupPlatform: 'Platform',
     groupAgent: 'Agent',

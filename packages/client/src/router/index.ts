@@ -95,6 +95,11 @@ const router = createRouter({
       name: 'hermes.files',
       component: () => import('@/views/hermes/FilesView.vue'),
     },
+    {
+      path: '/hermes/knowledge-base',
+      name: 'hermes.knowledgeBase',
+      component: () => import('@/views/hermes/KnowledgeBaseView.vue'),
+    },
   ],
 })
 

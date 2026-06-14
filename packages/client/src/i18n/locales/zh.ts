@@ -88,6 +88,7 @@ export default {
     terminal: '终端',
     groupChat: '群聊',
     files: '文件',
+    knowledgeBase: '知识库',
     groupConversation: '对话',
     groupPlatform: '平台',
     groupAgent: '代理',
