@@ -1,8 +1,9 @@
-import { request, getApiKey, getBaseUrlValue } from '../client'
+import { request, getActiveProfileName, getApiKey, getBaseUrlValue } from '../client'
 
 export interface FileEntry {
   name: string
   path: string
+  absolutePath?: string
   isDir: boolean
   size: number
   modTime: string
@@ -11,13 +12,14 @@ export interface FileEntry {
 export interface FileStat {
   name: string
   path: string
+  absolutePath?: string
   isDir: boolean
   size: number
   modTime: string
   permissions?: string
 }
 
-export async function listFiles(path: string = ''): Promise<{ entries: FileEntry[]; path: string }> {
+export async function listFiles(path: string = ''): Promise<{ entries: FileEntry[]; path: string; absolutePath?: string }> {
   const params = new URLSearchParams()
   if (path) params.set('path', path)
   const query = params.toString()
@@ -81,6 +83,8 @@ export async function uploadFiles(targetDir: string, files: File[]): Promise<{ n
   const headers: Record<string, string> = {}
   const token = getApiKey()
   if (token) headers['Authorization'] = `Bearer ${token}`
+  const profileName = getActiveProfileName()
+  if (profileName) headers['X-Hermes-Profile'] = profileName
 
   const res = await fetch(url, { method: 'POST', headers, body: formData })
   if (!res.ok) {
@@ -95,6 +99,8 @@ export function getFileDownloadUrl(relativePath: string, fileName?: string): str
   const base = getBaseUrlValue()
   const params = new URLSearchParams({ path: relativePath })
   if (fileName) params.set('name', fileName)
+  const profileName = getActiveProfileName()
+  if (profileName) params.set('profile', profileName)
   const token = getApiKey()
   if (token) params.set('token', token)
   return `${base}/api/hermes/download?${params.toString()}`
